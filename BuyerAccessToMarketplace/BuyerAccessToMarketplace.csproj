@@ -44,7 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="marketCustomer.cs" />
+    <Compile Include="ContractMarketDals.cs" />
+    <Compile Include="InternalContract.cs" />
+    <Compile Include="marketContract.cs" />
     <Compile Include="MarketplaceAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
