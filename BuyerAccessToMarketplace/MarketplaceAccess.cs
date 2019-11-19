@@ -4,6 +4,7 @@ using System.Data;
 using System.Threading;
 using System.Timers;
 using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace BuyerAccessToMarketplace
 {
@@ -59,8 +60,6 @@ namespace BuyerAccessToMarketplace
 
                 MySqlDataReader reader = command.ExecuteReader();
 
-
-
                 //Reads the rows from the contract marketplace until null
                 while (reader.Read())
                 {
@@ -72,8 +71,29 @@ namespace BuyerAccessToMarketplace
                         reader["Destination"].ToString(),
                         reader["Van_Type"].ToString());
                 }
+                reader.Close();
+
+                //Is this where the gap is bridged, where the UI pulls info
+                //The the user clicks the row and it gets input into the marketContract/ internalContract
+                //class?
+
+                //Inputting into the DataTable
+                using (mySqlConnection)
+                {
+                    var adapter = new MySqlDataAdapter
+                    {
+                        SelectCommand = command
+                    };
+
+                    var data = new DataTable();
+                    adapter.Fill(data);
+                    
+                    var internalMarket = DataTableToMarketContract(data);
+                    //return internalMarket;
+                };
                 //Sleep for 10s
                 Thread.Sleep(10000);
+
             }
             Console.WriteLine("Stopped");
 
@@ -85,7 +105,26 @@ namespace BuyerAccessToMarketplace
             return connection;
         }
         //Select row -- Also choose the current time of decision of Order picked
+        private static List<marketContract> DataTableToMarketContract(DataTable table)
+        {
+            var marketContractList = new List<marketContract>();
 
+            foreach (DataRow dataRow in table.Rows)
+            {
+                marketContractList.Add(new marketContract
+                {
+                    clientName = dataRow["Client_Name"].ToString(),
+                    jobType = Convert.ToInt32(dataRow["Job_Type"]),
+                    quantity = Convert.ToInt32(dataRow["Quantity"]),
+                    origin=dataRow["Origin"].ToString(),
+                    destination = dataRow["Destination"].ToString(),
+                    vanType = Convert.ToInt32(dataRow["Van_Type"])
+                    
+                });
+            }
+
+            return marketContractList;
+        }
         //Class for Customers
 
         //Method for resetting search list
