@@ -14,8 +14,11 @@ namespace BuyerAccessToMarketplace
         public string ClientName { get; set; }
         public InternalContract() { }
 
-        //CHECK CITIES FOR TRUTH SAY
-
+        /**
+        *\brief 
+        *\details <b>Get Internal Contract</b>
+        *\return Returns a list of the current internal contracts being generated
+         */
         public List<InternalContract> GetInternalContracts()
         {
             var internalContract = new ContractMarketDals().GetInternalContracts();

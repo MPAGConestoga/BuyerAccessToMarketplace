@@ -33,6 +33,27 @@ namespace BuyerAccessToMarketplace
             }
         }
 
+        public DataTable GetMarketContractsTable()
+        {
+            string sqlString = GetConnection();
+
+            using (var connection = new MySqlConnection(sqlString))
+            {
+                var command = new MySqlCommand(sqlString, connection);
+
+                var adapter = new MySqlDataAdapter
+                {
+                    SelectCommand = command
+                };
+
+                var dataTable = new DataTable();
+
+                adapter.Fill(dataTable);
+
+                return dataTable;
+            }
+        }
+
         public List<marketContract> GetMarketContracts()
         {
             string sqlString = GetConnection();

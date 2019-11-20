@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace BuyerAccessToMarketplace
 {
-    //Similar to products - Product Management
+    /// 
+    /// \class Market Contract
+    /// 
+    /// \brief Purpose of this is to model the
+    /// database extraction 
+    /// 
+    /// 
+    /// 
     public class marketContract
     {
         public string clientName { get; set; }
@@ -22,7 +29,12 @@ namespace BuyerAccessToMarketplace
 
         //GetById..?
 
-        //GetProducts
+        /**
+        *\brief 
+        *\details <b>Get Internal Contract</b>
+        *\return Returns a list of the current internal contracts being generated
+         */
+
         public List<marketContract> GetMarketContracts()
         {
             var contracts = new ContractMarketDals().GetMarketContracts();
